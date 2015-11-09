@@ -1,0 +1,41 @@
+{
+  "name": "a4",
+  "version": "1.0.0",
+  "description": "CRUD Application for CSC309 A4",
+  "main": "server.js",
+  "dependencies": {
+    "body-parser": "^1.4.3",
+    "cookie-parser": "^1.4.0",
+    "express-device": "^0.4.2",
+    "express-session": "^1.12.1",
+    "express": "^4.5.1",
+    "formidable": "^1.0.17",
+    "fs": "^0.0.2",
+    "fs-extra": "^0.26.0",
+    "ipware": "^0.0.7",
+    "method-override": "^2.0.2",
+    "mongodb": "^2.0.47",
+    "mongojs": "^1.4.1",
+    "multiparty": "^4.1.2",
+    "ng-file-upload": "^9.1.2",
+    "sf": "^0.1.8"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "npm install",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IhsanE/mini-webapp.git"
+  },
+  "keywords": [
+    "a4"
+  ],
+  "author": "Ihsan Etwaroo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/IhsanE/mini-webapp/issues"
+  },
+  "homepage": "https://github.com/IhsanE/mini-webapp#readme"
+}

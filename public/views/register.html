@@ -1,0 +1,20 @@
+<div class="jumbotron text-center">
+	<div class="register-container">
+      <form class="form-signin">
+        <h2 class="form-signin-heading">Please Register</h2>
+        <label for="inputEmail" class="sr-only">Email address</label>
+        <input type="email" ng-model = "Email" id="Email" class="form-control" placeholder="Email address" required="" autofocus="">
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" ng-model = "Password" id="Password" class="form-control" placeholder="Password" required="">
+		<label for="inputPassword" class="sr-only">Confirm Password</label>
+        <input type="password" ng-model = "ConfirmPassword" id="ConfirmPassword" class="form-control" placeholder="Confirm Password" required="">
+        <!-- <div class="checkbox">
+          <label>
+            <input type="checkbox" value="remember-me"> Remember me
+          </label>
+        </div> -->
+        <button class="btn btn-lg btn-primary btn-block" ng-click="register()" type="submit">Sign in</button>
+      </form>
+
+    </div>
+</div>

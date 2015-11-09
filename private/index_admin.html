@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<base href="/">
+
+	<title>PeepPeek</title>
+
+	<!-- CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<link rel="stylesheet" href="private/css/style.css">
+	<!-- custom styles -->
+
+	<!-- JS -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-beta.1/angular.min.js"></script>
+	<script src="ng-file-upload-shim.min.js"></script>
+	<!-- for no html5 browsers support -->
+	<script src="ng-file-upload.min.js"></script>
+
+	<!-- ANGULAR CUSTOM -->
+	<script src="private/js/controllers/MainCtrl.js"></script>
+	<script src="private/js/app.js"></script>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-beta.1/angular.min.js"></script>
+
+</head>
+
+<body>
+	<div class="container" ng-app="signedInApp" ng-controller="MainController">
+
+		<!-- HEADER -->
+		<nav class="navbar navbar-inverse">
+			<ul class="nav navbar-nav navbar-nav-large">
+				<li>
+					<img class="profile-picture" ng-click="profile_form()" src="/img/{{image}}" />
+				</li>
+				<li class="fn"><a class="first-name" ng-click="profile_form()">{{first}}</a></li>
+				<li class="fn"><a class="aggregated_data" ng-click="aggregate_form()">Aggregated Data</a></li>
+
+				<ul class="right-nav nav navbar-nav">
+					<li class="logout"><a href="/logout">Logout</a></li>
+				</ul>
+			</ul>
+		</nav>
+
+		<div class="jumbotron" ng-show="showProfile">
+			<h1>Edit Profile</h1>
+			<hr>
+			<div class="row">
+				<!-- left column -->
+				<div class="col-md-3">
+					<div class="text-center">
+						<img ng-src="/img/{{image}}" class="avatar img-circle" alt="avatar">
+						<h6>jpg images only</h6>
+
+						<input type="file" class="form-control" name="upload" onchange="angular.element(this).scope().changeDisplayPicture(this.files)" accept="image/jpeg">
+					</div>
+				</div>
+
+				<!-- edit form column -->
+				<div class="col-md-9 personal-info">
+					<!-- <div class="alert alert-info alert-dismissable">
+						<a class="panel-close close" data-dismiss="alert">×</a>
+						<i class="fa fa-coffee"></i> This is an
+						<strong>.alert</strong>. Use this to show important messages to the user.
+					</div> -->
+					<h3>Personal info</h3>
+
+					<form class="form-horizontal" role="form">
+
+						<div class="form-group">
+							<label class="col-lg-3 control-label">Type:</label>
+							<div class="col-lg-8">
+								<input class="form-control" type="text" value="{{type}}" readonly disabled>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-lg-3 control-label">First name:</label>
+							<div class="col-lg-8">
+								<input class="form-control" type="text" ng-model="first" value="{{first}}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-lg-3 control-label">Last name:</label>
+							<div class="col-lg-8">
+								<input class="form-control" type="text" ng-model="last" value="{{last}}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-lg-3 control-label">Email:</label>
+							<div class="col-lg-8">
+								<input class="form-control" type="text" ng-model="email" value="{{email}}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-lg-3 control-label">Description:</label>
+							<div class="col-lg-8">
+								<textarea class="form-control" maxlength="500" id="Description" ng-model="description">{{description}}</textarea>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label"></label>
+							<div class="col-md-8">
+								<input type="button" class="btn btn-primary" ng-click="updateProfile()" value="Save Changes">
+								<span></span>
+								<input type="reset" class="btn btn-default" ng-click="people_form()" value="Back">
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<div class=" jumbotron" ng-show="showAggregate">
+			<div class="row">
+				<label class="col-lg-3 control-label">Top Visited Pages/Endpoints:</label>
+				<ul class="col-lg-8">
+					<li class="" ng-repeat="model in GLOBAL_URLS | orderBy: '-value'">{{model.url}} : {{model.value}}</li>
+				</ul>
+			</div>
+
+			<div class="row">
+				<label class="col-lg-3 control-label">Locations:</label>
+				<ul class="col-lg-8">
+					<li class="" ng-repeat="coord in GLOBAL_LOCATIONS">lat: {{coord.latitude}} </br> long: {{coord.longitude}}</li>
+				</ul>
+			</div>
+		</div>
+
+		<div class=" jumbotron" ng-show="showPeople">
+
+			<h1>User List</h1>
+			<div class="panel-group" id="accordion">
+				<div ng-repeat="model in collection">
+					<div class="panel panel-default">
+						<div class="panel-heading" data-toggle="collapse" data-parent="#accordion" href="#{{$index}}">
+							<h4 class="panel-title">
+								<a data-toggle="collapse" data-parent="#accordion" href="#{{$index}}">
+                        {{model.first}} {{model.last}} <i style="font-size:14px; color: #777777;">{{model.type}}</i>
+                    </a>
+							</h4>
+						</div>
+						<div id="{{$index}}" class="panel-collapse collapse">
+							<div class="panel-body">
+
+								<div class="row">
+									<!-- left column -->
+									<div class="col-md-3">
+										<div class="text-center">
+											<img ng-src="/img/{{model.email}}" class="avatar img-circle" alt="avatar">
+											<!-- <h6>Upload a different photo...</h6>
+
+								<input type="file" class="form-control" name="upload" onchange="angular.element(this).scope().changeDisplayPicture(this.files)" > -->
+										</div>
+									</div>
+
+									<!-- edit form column -->
+									<div class="col-md-9 personal-info" ng-init="editOtherDict[$index] = true">
+										<!-- <div class="alert alert-info alert-dismissable">
+								<a class="panel-close close" data-dismiss="alert">×</a>
+								<i class="fa fa-coffee"></i> This is an
+								<strong>.alert</strong>. Use this to show important messages to the user.
+							</div> -->
+										<h3>Personal info
+											<input ng-show="model.type == 'normal'" type="button" class="btn btn-danger" value="Delete" style="float:right;margin-bottom:20px;" ng-click="delete($index)">
+											<input ng-show="model.type == 'normal' && editOtherDict[$index] == true" type="button" class="btn btn-info" value="Edit" style="float:right;margin-right: 10px; margin-bottom:20px;" ng-click="editOther($index)">
+											<input ng-show="model.type == 'normal' && editOtherDict[$index] == false" type="button" class="btn btn-success" value="Done Editting" style="float:right; margin-right: 10px; margin-bottom:20px;" ng-click="submitEditOther($index)">
+										</h3>
+
+										<form class="form-horizontal" role="form">
+											<div class="form-group">
+												<label class="col-lg-3 control-label">First name:</label>
+												<div class="col-lg-8">
+													<input class="form-control" type="text" ng-model="model.first" value="{{model.first}}" ng-readonly = "editOtherDict[$index]" ng-disabled = "editOtherDict[$index]">
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-lg-3 control-label">Last name:</label>
+												<div class="col-lg-8">
+													<input class="form-control" type="text" ng-model="model.last" value="{{model.last}}" ng-readonly = "editOtherDict[$index]" ng-disabled = "editOtherDict[$index]">
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-lg-3 control-label">Email:</label>
+												<div class="col-lg-8">
+													<input class="form-control" type="text" value="{{model.email}}" readonly disabled>
+												</div>
+											</div>
+
+											<div class="form-group">
+												<label class="col-lg-3 control-label">Description:</label>
+												<div class="col-lg-8">
+													<textarea class="form-control" maxlength="500" id="Description" ng-model="model.description" ng-readonly = "editOtherDict[$index]" ng-disabled = "editOtherDict[$index]">{{model.description}}</textarea>
+												</div>
+											</div>
+
+											<div class="form-group">
+												<label class="col-lg-3 control-label">Devices:</label>
+												<ul class="col-lg-8">
+													<li class="" ng-repeat="d in model.devices">{{d}}</li>
+												</ul>
+											</div>
+
+											<div class="form-group">
+												<label class="col-lg-3 control-label">Platforms:</label>
+												<ul class="col-lg-8">
+													<li class="" ng-repeat="p in model.platforms">{{p}}</li>
+												</ul>
+											</div>
+
+											<div class="form-group">
+												<label class="col-lg-3 control-label">IP information <span style="font-size:10px;">[address, family, port]<span>:</label>
+												<ul class="col-lg-8">
+													<li class="" ng-repeat="c in model.connection | limitTo:6">{{c}}</li>
+												</ul>
+											</div>
+
+											<div class="form-group">
+												<label class="col-lg-3 control-label">Top Visited Pages/Endpoints:</label>
+												<ul class="col-lg-8">
+													<li class="" ng-repeat="(k,v) in model.urls | limitTo:6">{{k}} : {{v}}</li>
+												</ul>
+											</div>
+
+											<div class="form-group">
+												<label class="col-lg-3 control-label">Locations:</label>
+												<ul class="col-lg-8">
+													<li class="" ng-repeat="coord in model.locations | limitTo:6">lat: {{coord.latitude}} </br> long: {{coord.longitude}}</li>
+												</ul>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

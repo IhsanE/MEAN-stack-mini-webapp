@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>PeepPeek</title>
+
+	<!-- CSS -->
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<!-- custom styles -->
+
+	<!-- JS -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-beta.1/angular.min.js"></script>
+
+	<!-- ANGULAR CUSTOM -->
+	<script src="js/app.js"></script>
+	<script src="js/controllers/MainCtrl.js"></script>
+	<script src="js/directives/passwordMatchDirective.js"></script>
+
+</head>
+
+<body ng-app="sampleApp" ng-controller="MainController">
+	<div class="container">
+
+		<!-- HEADER -->
+		<nav class="navbar navbar-inverse">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="/">PeepPeek</a>
+				<ul class="nav navbar-nav">
+					<li>
+						<button href="" class="btn btn-sm btn-primary btn-block" ng-click="register_form()">Register</button>
+					</li>
+					<li>
+						<button class="btn btn-sm btn-success btn-block" ng-click="login_form()">Login</button>
+					</li>
+				</ul>
+			</div>
+
+		</nav>
+
+		<!-- ANGULAR DYNAMIC CONTENT -->
+		<div class="jumbotron text-center">
+			<div class="register-container" ng-show="showRegister">
+
+
+
+				<div class="alert alert-success alert-dismissable" ng-show="registrationSuccessful">
+					<i class="fa fa-coffee"></i>
+					<strong>Registration Successful!</strong> Please log in above.
+				</div>
+
+				<div class="alert alert-danger alert-dismissable" ng-show="registrationFailure">
+					<i class="fa fa-coffee"></i>
+					<strong>Registration Failed</strong> Try a different email.
+				</div>
+
+				<div class="alert alert-danger alert-dismissable" ng-show="myForm.ConfirmPassword.$error.passwordmatch || myForm.Password.$error.passwordmatch">
+					<i class="fa fa-coffee"></i>
+					<strong>Passwords do not match</strong> Please try again.
+				</div>
+
+				<form name="myForm" class="form-signin" ng-hide="registrationSuccessful">
+					<h2 class="form-signin-heading">Please Register</h2>
+
+					<div class="input-group">
+						<label for="inputFirst" class="sr-only">First name</label>
+						<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+						<input type="text" ng-model="First" id="First" class="form-control" placeholder="First name" required autofocus="">
+					</div>
+
+					<div class="input-group">
+						<label for="inputDescrption" class="sr-only">Description</label>
+						<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+						<textarea class="form-control" maxlength="500" placeholder="Description ..." ng-model="Description" id="Description" required autofocus=""></textarea>
+					</div>
+
+					<div class="input-group">
+						<label for="inputEmail" class="sr-only">Email address</label>
+						<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+						<input type="email" ng-model="Email" id="Email" class="form-control" placeholder="Email address" required autofocus="">
+					</div>
+
+					<div class="input-group">
+						<label for="inputPassword" class="sr-only">Password</label>
+						<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+						<input type="password" password-match="ConfirmPassword" name="Password" ng-model="Password" id="Password" class="form-control" placeholder="Password" required>
+					</div>
+
+					<div class="input-group">
+						<label for="inputPassword" class="sr-only">Confirm Password</label>
+						<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+						<input type="password" password-match="Password" name="ConfirmPassword" ng-model="ConfirmPassword" id="ConfirmPassword" class="form-control" placeholder="Confirm Password" required>
+					</div>
+
+					<button class="btn btn-lg btn-primary btn-block" ng-disabled="myForm.$invalid" ng-click="register()" type="submit">Register</button>
+				</form>
+			</div>
+
+			<div class="login-container" ng-show="showLogin">
+
+				<form class="form-signin">
+					<h2 class="form-signin-heading">Please Sign In</h2>
+
+					<div class="alert alert-danger alert-dismissable" ng-show="loginFailure">
+						<i class="fa fa-coffee"></i>
+						<strong>Login Failed</strong> Email/Password do not match.
+					</div>
+
+					<div class="input-group">
+						<label for="inputEmail" class="sr-only">Email address</label>
+						<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+						<input type="email" ng-model="Email" id="Email" class="form-control" placeholder="Email address" required="" autofocus="">
+					</div>
+
+					<div class="input-group">
+						<label for="inputPassword" class="sr-only">Password</label>
+						<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+						<input id="password" ng-model="Password" id="Password" type="password" class="form-control" name="password" placeholder="Password">
+					</div>
+
+					<button class="btn btn-lg btn-primary btn-block" ng-click="login()">Sign in</button>
+				</form>
+
+			</div>
+
+			<div class="home-container" ng-show="showHome">
+				<h1>Peep Peek</h1>
+				<hr>
+				<h4>Login to see user profiles!</h4>
+
+				<img src="/cover.jpg" class="cover-image">
+			</div>
+		</div>
+	</div>
+</body>
+</html>

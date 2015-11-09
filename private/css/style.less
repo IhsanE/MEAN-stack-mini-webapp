@@ -1,0 +1,76 @@
+body {
+    .avatar{
+        width: 90px;
+        height: 90px;
+    }
+    .panel-heading:hover{
+        cursor: pointer;
+    }
+    .profile-picture {
+        height: 40px;
+        width: 40px;
+        border-radius: 50%;
+    }
+
+    .input-group{
+        margin-bottom : 15px;
+    }
+    h4 {
+        font-weight: 200;
+    }
+    .navbar-header{
+        width: 100%;
+    }
+
+    .navbar-nav-large{
+        width: 100%;
+    }
+
+    .profile-picture{
+        &:hover{
+            opacity: 0.5;
+            cursor : pointer;
+        }
+    }
+
+    .first-name, .aggregated_data {
+        &:hover{
+            color: white;
+            cursor : pointer;
+        }
+    }
+
+    .navbar-nav{
+        float: right;
+        margin-top: 9px;
+        margin-right: 0px;
+        li{
+            button{
+                margin-bottom: 6px;
+            }
+            margin-right:11px;
+        }
+    }
+
+    @media (min-width: 992px) {
+        img{
+            width: 600px;
+        }
+    }
+
+    @media (max-width: 991px) {
+        img{
+            width: 350px;
+        }
+        .fn{
+
+            display: none;
+        }
+    }
+
+    @media (max-width: 767px) {
+        .logout{
+            margin-top: -42px;
+        }
+    }
+}
