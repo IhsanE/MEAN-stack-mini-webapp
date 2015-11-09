@@ -34,7 +34,7 @@ Has all the functionalities of an administrative user
 
 ## Instructions:
 
-1. Clone project, cd into /mini-webapp
+1. Clone project, cd into /MEAN-stack-mini-webapp
 2. sudo npm install
 3. mongo a4 (Might need to start up mongod if not already running)
 4. sudo server.js
